@@ -5,27 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Изучение стихотворения</title>
     <style>
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #ffffff;
-            text-align: center;
-            padding: 50px;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+       body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #ffffff, #ffffff, #ffffff, #2f00ff, #2f00ff, #2f00ff, #ff0000, #ff0000, #ff0000); /* Многоцветный градиент */
+    background-size: 400% 400%; /* Увеличиваем размер фона для анимации */
+    color: #ffffff;
+    text-align: center;
+    padding: 50px;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: gradientBG 50s ease infinite; /* Анимация фона */
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%; /* Начальная позиция градиента */
+    }
+    50% {
+        background-position: 100% 50%; /* Промежуточная позиция градиента */
+    }
+    100% {
+        background-position: 0% 50%; /* Конечная позиция градиента */
+    }
+}
         h1 {
-            font-size: 2em;
+            font-size: 1em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
+            margin-bottom: 90px;
         }
         .poem {
             font-style: italic;
-            font-size: 2em;
+            font-size: 1.5em;
             line-height: 1.6;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             max-width: 600px;
@@ -54,7 +68,7 @@
             width: 300px;
         }
         .timer {
-            font-size: 2em;
+            font-size: 1.3em;
             margin-top: 20px;
         }
         .hidden {
