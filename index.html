@@ -43,7 +43,11 @@
         .btn[data-color="cyan"] { background-color: #1abc9c; }
         .btn[data-color="gray"] { background-color: #95a5a6; }
         
-        #startBtn, #levelSelectBtn {
+        .active {
+            filter: brightness(1.5);
+        }
+
+        #startBtn, #levelSelectBtn, #closeAdminBtn {
             margin-top: 20px;
             font-size: 18px;
             padding: 10px;
@@ -81,8 +85,9 @@
     <div id="adminMenu">
         <h2>Админ-меню</h2>
         <label for="levelSelect">Выберите уровень:</label>
-        <input type="number" id="levelSelect" min="1" max="20" value="1">
+        <input type="number" id="levelSelect" min="1" max="30" value="1">
         <button id="levelSelectBtn">Выбрать</button>
+        <button id="closeAdminBtn">Закрыть</button>
     </div>
 
     <script>
@@ -93,10 +98,11 @@
         const adminMenu = document.getElementById('adminMenu');
         const levelSelectBtn = document.getElementById('levelSelectBtn');
         const levelSelect = document.getElementById('levelSelect');
+        const closeAdminBtn = document.getElementById('closeAdminBtn');
         let sequence = [];
         let playerSequence = [];
         let level = 1;
-        const maxLevel = 20;
+        const maxLevel = 30;
         let adminClicks = 0;
 
         function getRandomButton() {
@@ -118,21 +124,8 @@
         }
 
         function flashButton(button) {
-            const originalColor = getComputedStyle(button).backgroundColor;
-            const brightenedColor = lightenColor(originalColor, 30);
-            button.style.backgroundColor = brightenedColor;
-            setTimeout(() => { 
-                button.style.backgroundColor = originalColor;
-            }, 400);
-        }
-
-        function lightenColor(rgb, percent) {
-            let rgbValues = rgb.match(/\d+/g).map(Number);
-            let amt = Math.round(2.55 * percent);
-            let r = Math.min(rgbValues[0] + amt, 255);
-            let g = Math.min(rgbValues[1] + amt, 255);
-            let b = Math.min(rgbValues[2] + amt, 255);
-            return `rgb(${r}, ${g}, ${b})`;
+            button.classList.add('active');
+            setTimeout(() => button.classList.remove('active'), 400);
         }
 
         function startGame() {
@@ -159,12 +152,10 @@
         });
 
         function checkSequence() {
-            for (let i = 0; i < playerSequence.length; i++) {
-                if (playerSequence[i] !== sequence[i]) {
-                    message.textContent = 'Ошибка! Начинаем заново...';
-                    setTimeout(startGame, 1000);
-                    return;
-                }
+            if (!playerSequence.every((btn, i) => btn === sequence[i])) {
+                message.textContent = 'Ошибка! Начинаем заново...';
+                setTimeout(startGame, 1000);
+                return;
             }
             if (playerSequence.length === sequence.length) {
                 message.textContent = 'Правильно! Следующий уровень...';
@@ -184,8 +175,13 @@
 
         levelSelectBtn.addEventListener('click', () => {
             level = parseInt(levelSelect.value) || 1;
+            sequence = [];
+            nextLevel();
             adminMenu.style.display = 'none';
-            startGame();
+        });
+
+        closeAdminBtn.addEventListener('click', () => {
+            adminMenu.style.display = 'none';
         });
 
         startBtn.addEventListener('click', startGame);
