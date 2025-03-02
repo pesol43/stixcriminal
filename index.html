@@ -3,1080 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamster Kombat Tap</title>
+    <title>Изучение стихотворения</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #ffffff;
             text-align: center;
-            background-color: rgba(0, 0, 0, 1);
+            padding: 50px;
             margin: 0;
-            padding: 0;
-            overflow: hidden;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             flex-direction: column;
         }
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://avatars.mds.yandex.net/get-shedevrum/11917197/img_7ab0558d02f411efbfbc0a6d81cb79fd/orig') no-repeat center center;
-            background-size: cover;
-            opacity: 0.3;
-            z-index: -1;
+        h1 {
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
         }
-        .container {
-            position: relative;
-            z-index: 1;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
+        .poem {
+            font-style: italic;
+            font-size: 2em;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            margin: 20px auto;
         }
-        .hamster {
-            width: 240px;
-            cursor: pointer;
-          border-radius: 10px 10px 0 0;
-          transition: transform 0.2s ease-out;
-          -webkit-tap-highlight-color: transparent;
-        }
-        p {
-            font-size: 19px;
+        .author {
             font-weight: bold;
-            color: white;
+            margin-top: 20px;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
-        .stats-bar {
-           position: fixed;
-           top: 0;
-           width: 99%;
-           background-color: rgba(0, 0, 0, 0.5);
-           padding: 2px 0;  /* Уменьшаем высоту панели */
-           display: flex;
-           justify-content: center;
-           gap: 10px;
-           border-radius: 10px 10px 0 0; /* Закругляем верхние углы */
-}
-button, a, .clickable-element {
-    -webkit-tap-highlight-color: transparent;
-}
-      .shop-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2px;
-}
-
-.shop-item img {
-    border-radius: 1px;
-    margin-bottom: 1px;
-}
-       .menu-bar {
-            position: fixed;
-            bottom: -100px;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 10px 0;
-            display: flex;
-            justify-content: center;
-            transition: bottom 0.5s ease-in-out;
-          z-index: 100;
-        }
-.upgrade-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-}
-      .shop-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-      .buy-max {
-    font-size: 15px;
-    padding: 10px 15px;
-    width: 200px;
-}
-      .upgrade-button:hover {
-    transform: translateX(2px) translateY(2px);
-    transition: transform 0.1s ease;
-}
-      .upgrade-button {
-    font-size: 10px; /* Увеличиваем шрифт */
-    padding: 10px 20px; /* Увеличиваем отступы */
-    width: 100%; /* Растягиваем кнопки */
-    max-width: 200px; /* Ограничиваем максимальную ширину */
-}
-.upgrade-button {
-    flex-grow: 1; /* Кнопки улучшений занимают все доступное место */
-}
-#achievements-list {
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* Уменьшаем расстояние между достижениями */
-    max-height: 300px; /* Ограничиваем высоту контейнера */
-    overflow-y: auto; /* Добавляем вертикальную прокрутку */
-    padding: 10px;
-}
-#custom-notification {
-    position: fixed;
-    top: -150px; /* Начальное положение за пределами экрана */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px; /* Фиксированная ширина */
-    background-color: #1c1b1b;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 10000000;
-    animation: slideIn 0.5s ease-in-out forwards;
-    cursor: pointer; /* Курсор в виде указателя */
-}
-
-#custom-notification.hidden {
-    display: none;
-}
-
-.notification-content {
-    position: relative;
-}
-
-.notification-content h2 {
-    color: gold;
-    font-size: 24px;
-    margin: 0; /* Убираем отступы у заголовка */
-}
-
-.notification-content p {
-    color: white;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* Полоска таймера */
-.notification-timer {
-    position: absolute;
-    bottom: 10;
-    left: 0;
-    width: 100%;
-    height: 9px;
-    background-color: #444;
-    border-radius: 10px 10px 10px 10px;
-    overflow: hidden;
-}
-
-.notification-timer-fill {
-    height: 100%;
-    width: 100%;
-    background-color: gold;
-    animation: timer 5s linear forwards;
-}
-
-/* Анимация появления */
-@keyframes slideIn {
-    from { top: -150px; }
-    to { top: 20px; } /* Останавливаем уведомление на 20px от верхнего края */
-}
-
-/* Анимация уменьшения и исчезновения */
-@keyframes shrinkAndFadeOut {
-    from {
-        transform: translateX(-50%) scale(1);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(-50%) scale(0.5);
-        opacity: 0;
-    }
-}
-
-/* Анимация полоски таймера */
-@keyframes timer {
-    from { width: 100%; }
-    to { width: 0%; }
-}
-.achievement {
-    padding: 8px;
-    border: 1px solid gold;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    font-size: 14px;
-}
-
-.achievement.unlocked {
-    border-color: green;
-}
-
-.achievement h3 {
-    margin: 0;
-    font-size: 16px;
-}
-
-.achievement p {
-    margin: 5px 0;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 10px;
-    background-color: #444;
-    border-radius: 5px;
-    margin-top: 5px;
-}
-
-.progress-fill {
-    height: 100%;
-    background-color: gold;
-    border-radius: 5px;
-}
-
-.progress-fill.unlocked {
-    background-color: green;
-}
-.buy-max {
-    flex-grow: 0;
-    width: 333px; /* Фиксированная ширина для кнопок "Купить максимум" */
-}
- .upgrade-button {
-            padding: 5px 10px;
-            border: none;
+        button {
+            padding: 10px 20px;
+            font-size: 2em;
+            margin-top: 20px;
             cursor: pointer;
-            font-size: 15px;
-            border-radius: 15px;
-        }
-  .menu-button {
-            padding: 15px 4px;
+            background-color: #0288d1;
+            color: #ffffff;
             border: none;
-            cursor: pointer;
-            font-size: 10px;
-            border-radius: 15px;
-      }
-      .menu-button:hover {
-    transform: translateX(2px) translateY(2px);
-    transition: transform 0.1s ease;
-}
-    .profil-button{
-    padding: 10px 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 15px;
-            border-radius: 15px;
-    
-    }
-        .menu-button { background-color: black; color: white; }
-        .menu-button { background-color: #1c1b1b; }
-        .upgrade-button { background-color: gold; color: black; display: block; margin: 10px auto; }
-        .toggle-panel-button {
-            position: fixed;
-            bottom: 0px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 10px;
-            background-color: blue;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
             border-radius: 5px;
-            transition: bottom 0.5s ease-in-out;
         }
-      .falling-hamster {
-    position: fixed;
-    width: 40px;
-    animation: fall 2s linear forwards;
-    top: -50px;
-}
-
-@keyframes fall {
-    0% { transform: translateY(-50px); opacity: 1; }
-    100% { transform: translateY(100vh); opacity: 0; }
-}
-      
-
-        .hidden { display: none; }
+        .input-field {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 2em;
+            width: 300px;
+        }
+        .timer {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="background"></div>
-    <div class="stats-bar">
-        <p>$Krml: <span id="score">0</span></p>
-        <p>$Krml за клик: <span id="click-value">1</span></p>
-        <p>Пассивный доход: <span id="passive-income">0</span> $Krml в секунду</p>
-    </div>
- <div class="container hidden" id="magazMenu">
-    <h2 style="color: white;">Магазин</h2>
-    <div>
-        <h3 style="color: white;">Скины для хомяка</h3>
-        <div id="skins-container" class="shop-row"></div>
-    </div>
-    <div>
-        <h3 style="color: white;">Фоны</h3>
-        <div id="backgrounds-container" class="shop-row"></div>
-    </div>
-</div>
-    <div class="container" id="mainMenu">
-        <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">Тапать монетку</h1>
-        <img src="https://i.imgur.com/VPkPPzf.png" alt="Hamster" class="hamster" id="hamster">
-    </div>
-  <div class="container hidden" id="achievementsMenu">
-    <h2 style="color: white;">Достижения</h2>
-    <div id="achievements-list"></div>
-</div>
-  <div id="adminMenu" class="hidden" style="
-    position: fixed; 
-    top: 50%; left: 50%; 
-    transform: translate(-50%, -50%);
-    background-color: black; 
-    color: white; 
-    padding: 20px; 
-    border-radius: 10px; 
-    text-align: center;
-    z-index: 99999">
-    <h2>Админ-меню</h2>
-    <p>Добро пожаловать, Админ!</p>
-    <button onclick="giveCoins()" style="padding: 10px; font-size: 16px; margin-bottom: 10px;">Выдать монеты</button>
-    <button onclick="closeAdminMenu()" style="padding: 10px; font-size: 16px;">Закрыть</button>
-</div>
-<div id="custom-notification" class="hidden">
-    <div class="notification-content">
-        <h2>Достижение разблокировано!</h2>
-        <p id="notification-message"></p>
-        <div class="notification-timer">
-            <div class="notification-timer-fill"></div>
-        </div>
-    </div>
-</div>
-    <div class="container hidden upgrade-menu" id="upgradeMenu">
-    <h2 style="color: white;">Улучшения</h2>
-    <div class="upgrade-row">
-        <button class="upgrade-button" id="upgrade-click">Улучшить клик (+1) - 10 очков</button>
-        <button class="upgrade-button buy-max" id="buy-maxclick">Купить максимум</button>
-      </div>
-    <div class="upgrade-row">
-        <button class="upgrade-button" id="upgrade-passive">Купить пассивный доход (+1/с) - 50 очков</button>
-        <button class="upgrade-button buy-max" id="buy-maxpass">Купить максимум</button>
-      </div>
-    <div class="upgrade-row">
-      <button class="upgrade-button" id="upgrade-doubleclick">x2 клик - 100 очков</button>
-        <button class="upgrade-button" id="upgrade-doublepassive">х2 пассивный доход - 500 очков</button>
-      </div>
-</div>
-    <div class="menu-bar" id="menuBar">
-        <button class="menu-button" onclick="showMenu('mainMenu')">Главная</button>
-        <button class="menu-button" onclick="showMenu('upgradeMenu')">Улучшения</button>
-        <button class="menu-button" onclick="showMenu('magazMenu')">Магазин</button>
-        <button class="menu-button" onclick="showMenu('liderMenu')">Таблица Лидеров</button>
-        <button class="menu-button" onclick="showMenu('achievementsMenu')">Достижения</button>
-        <button class="menu-button" onclick="showMenu('profilMenu')">Профиль</button>
-        <button class="menu-button" onclick="redirectToPoems()">Стих</button>
-    </div>
-  <div class="container hidden" id="liderMenu">
-    <h2 style="color: white;">Таблица Лидеров</h2>
-    <button id="save-score-button" style="margin-bottom: 20px;">Сохранить результат</button>
-    <!-- Таблица будет отображаться здесь -->
-</div>
-   <div class="container hidden profil-menu" id="profilMenu">
-    <h2 style="color: white;">Профиль</h2>
-    <div class="upgrade-row">
-        <button class="upgrade-button" id="delete-data-button" style="background-color: red;">Удалить все данные(не работает потому что я не знаю как это сделать если вы знаете писать тг:@bebra556)</button>
-    </div>
-     
-</div>
-    <button class="toggle-panel-button" id="toggleButton" onclick="togglePanel()">Показать меню</button>
-        <script>
-        let score = parseInt(localStorage.getItem("score")) || 0;
-        let clickValue = parseInt(localStorage.getItem("clickValue")) || 1;
-        let passiveIncome = parseInt(localStorage.getItem("passiveIncome")) || 0;
-        let lastVisit = parseInt(localStorage.getItem("lastVisit")) || Date.now();
-        let elapsedSeconds = Math.floor((Date.now() - lastVisit) / 1000);
-        score += elapsedSeconds * passiveIncome;
-          const skins = [
-    { id: "default", name: "Обычный хомяк", price: 0, image: "https://i.imgur.com/VPkPPzf.png" },
-    { id: "gold", name: "Хз че", price: 5000, image: "https://images.apteka.ru/original_70b3c73b-9c07-40b1-b3a7-9809f597e0da.jpeg" },
-    { id: "ninja", name: "Чиловый Guy", price: 10000, image: "https://i.imgur.com/vrIzzjt.png" }
-];
-
-const backgrounds = [
-    { id: "default", name: "Обычный фон", price: 0, image: "https://avatars.mds.yandex.net/get-shedevrum/11917197/img_7ab0558d02f411efbfbc0a6d81cb79fd/orig" },
-    { id: "space", name: "Космос", price: 7000, image: "https://www.gctc.ru/media/images/education/general/cosmos_1.jpg" },
-    { id: "forest", name: "Лес", price: 10000, image: "https://i.imgur.com/HXEVbjw.jpeg" }
-];
-
-let currentSkin = "default";
-let currentBackground = "default";
-          const achievements = [
-    {
-        id: "novice",
-        name: "Новичок",
-        description: "Собери 1000 очков",
-        goal: 1000,
-        unlocked: false
-    },
-    {
-        id: "magnate",
-        name: "Магнат",
-        description: "Собери 1,000,000 очков",
-        goal: 1000000,
-        unlocked: false
-    },
-    {
-        id: "clicker-pro",
-        name: "Кликер-профи",
-        description: "Сделай 1000 кликов",
-        goal: 1000,
-        unlocked: false
-    },
-    {
-        id: "upgrade-master",
-        name: "Мастер улучшений",
-        description: "Купи 10 улучшений",
-        goal: 10,
-        unlocked: false
-    },
-    {
-        id: "passive-income",
-        name: "Пассивный доход",
-        description: "Достигни пассивного дохода 100 очков в секунду",
-        goal: 100,
-        unlocked: false
-    }
-];
-          let totalClicks = 0; // Счётчик кликов
-let totalUpgrades = 0; // Счётчик улучшений
-
-function checkAchievements() {
-    let updated = false;
-
-    achievements.forEach(achievement => {
-        if (!achievement.unlocked) {
-            let previousProgress = achievement.progress;
-
-            // Обновляем прогресс для каждого достижения
-            switch (achievement.id) {
-                case "novice":
-                case "magnate":
-                    achievement.progress = Math.min(score, achievement.goal);
-                    break;
-                case "clicker-pro":
-                    achievement.progress = Math.min(totalClicks, achievement.goal);
-                    break;
-                case "upgrade-master":
-                    achievement.progress = Math.min(totalUpgrades, achievement.goal);
-                    break;
-                case "passive-income":
-                    achievement.progress = Math.min(passiveIncome, achievement.goal);
-                    break;
-            }
-
-            // Если прогресс изменился, обновляем интерфейс
-            if (achievement.progress !== previousProgress) {
-                updated = true;
-            }
-
-            // Если прогресс достиг цели, разблокируем достижение
-            if (achievement.progress >= achievement.goal) {
-                achievement.unlocked = true;
-                showNotification(`Достижение: ${achievement.name}\n${achievement.description}`); // Используем кастомное уведомление
-                updated = true;
-            }
-        }
-    });
-
-    // Если были изменения, перерисовываем интерфейс
-    if (updated) {
-        showAchievements();
-    }
-}
-          function redirectToPoems() {
-    window.location.href = "https://pesol44.github.io/criminal/";
-}
-function showAchievements() {
-    const achievementsList = document.getElementById("achievements-list");
-    achievementsList.innerHTML = "";
-
-    achievements.forEach(achievement => {
-        const achievementDiv = document.createElement("div");
-        achievementDiv.className = `achievement ${achievement.unlocked ? "unlocked" : ""}`;
-        
-        // Добавляем прогресс-бар
-        const progressBar = document.createElement("div");
-        progressBar.style.width = "100%";
-        progressBar.style.height = "10px";
-        progressBar.style.backgroundColor = "#444";
-        progressBar.style.borderRadius = "5px";
-        progressBar.style.marginTop = "5px";
-
-        const progressFill = document.createElement("div");
-        progressFill.style.width = `${(achievement.progress / achievement.goal) * 100}%`;
-        progressFill.style.height = "100%";
-        progressFill.style.backgroundColor = achievement.unlocked ? "green" : "gold";
-        progressFill.style.borderRadius = "5px";style="width: 300px; height: 300px;"
-
-        progressBar.appendChild(progressFill);
-
-        achievementDiv.innerHTML = `
-            <h3>${achievement.name}</h3>
-            <p>${achievement.description}</p>
-            <p>Прогресс: ${achievement.progress} / ${achievement.goal}</p>
-            <p>Статус: ${achievement.unlocked ? "Разблокировано" : "Заблокировано"}</p>
-        `;
-        achievementDiv.appendChild(progressBar);
-        achievementsList.appendChild(achievementDiv);
-    });
-}
-     
-       function updateDisplay() {
-    document.getElementById("score").textContent = formatNumber(score);
-    document.getElementById("click-value").textContent = formatNumber(clickValue);
-    document.getElementById("passive-income").textContent = formatNumber(passiveIncome);
-
-    localStorage.setItem("score", score);
-    localStorage.setItem("clickValue", clickValue);
-    localStorage.setItem("passiveIncome", passiveIncome);
-    localStorage.setItem("lastVisit", Date.now());
-
-    // Проверяем достижения
-    checkAchievements();
-}
-function showNotification(message) {
-    const notification = document.getElementById("custom-notification");
-    const notificationMessage = document.getElementById("notification-message");
-
-    // Устанавливаем текст уведомления
-    notificationMessage.textContent = message;
-
-    // Показываем уведомление
-    notification.classList.remove("hidden");
-
-    // Закрываем уведомление при нажатии на него
-    notification.addEventListener("click", () => {
-        // Добавляем анимацию уменьшения и исчезновения
-        notification.style.animation = "shrinkAndFadeOut 0.9s ease-in-out forwards";
-
-        // Скрываем уведомление после завершения анимации
-        setTimeout(() => {
-            notification.classList.add("hidden");
-            notification.style.animation = ""; // Сбрасываем анимацию
-        }, 3000); // Время анимации
-    }, { once: true });
-
-    // Автоматически скрываем уведомление через 5 секунд
-    setTimeout(() => {
-        closeNotification();
-    }, 5000);
-}
-
-function closeNotification() {
-    const notification = document.getElementById("custom-notification");
-    notification.classList.add("hidden");
-}
-function createFallingHamster() {
-            const hamster = document.createElement("img");
-            hamster.src = "https://i.imgur.com/VPkPPzf.png";
-            hamster.classList.add("falling-hamster");
-            hamster.style.left = `${Math.random() * 100}%`;
-            document.body.appendChild(hamster);
-
-            // Удаление хомяка после завершения анимации
-            hamster.addEventListener("animationend", () => {
-                hamster.remove();
-            }, { once: true });
-        }
-          function giveCoins() {
-    let amount = prompt("Введите количество монет:");
-    amount = parseInt(amount);
+    <h1>Прощай, немытая Россия</h1>
+    <div class="poem hidden" id="poem"></div>
+    <div class="author" id="author">— Михаил Лермонтов</div>
+    <button id="startButton">Начать учить</button>
     
-    if (!isNaN(amount) && amount > 0) {
-        score += amount;
-        updateDisplay(); // Обновляем баланс на экране
-        alert(`Выдано ${amount} монет!`);
-    } else {
-        alert("Некорректное число!");
-    }
-}
-function closeAdminMenu() {
-    document.getElementById("adminMenu").classList.add("hidden");
-}
-        document.getElementById("hamster").addEventListener("click", () => {
-    score += clickValue;
-    totalClicks++; // Увеличиваем счётчик кликов
-    updateDisplay();
-    createFallingHamster();
-    console.log("Клик по хомяку!");
-    let hamster = event.target;
-    let rect = hamster.getBoundingClientRect();
-    let centerX = rect.left + rect.width / 2;
-    let centerY = rect.top + rect.height / 2;
-    let deltaX = event.clientX - centerX;
-    let deltaY = event.clientY - centerY;
-    let angleX = (deltaY / rect.height) * 150;
-    let angleY = (deltaX / rect.width) * -150;
-    hamster.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-    setTimeout(() => {
-        hamster.style.transform = "rotateX(0deg) rotateY(0deg)";
-    }, 200);
-});
+    <div class="timer hidden" id="timer"></div>
 
+    <div class="hidden" id="inputSection">
+        <input type="text" class="input-field" id="userInput" placeholder="Введите строку...">
+        <button id="nextButton">Дальше</button>
+    </div>
 
-      document.getElementById("upgrade-click").addEventListener("click", () => {
-    if (score >= 10) {
-        score -= 10;
-        clickValue++;
-        totalUpgrades++;
-        updateDisplay();
-        checkAchievements(); // Обновляем прогресс
-    }
-});
+    <script>
+        const poemLines = [
+            "Прощай немытая Россия",
+            "Страна рабов страна господ",
+            "И вы мундиры голубые",
+            "И ты им преданный народ",
+            "Быть может за стеной Кавказа",
+            "Сокроюсь от твоих пашей",
+            "От их всевидящего глаза",
+            "От их всеслышащих ушей"
+        ];
 
-document.getElementById("upgrade-passive").addEventListener("click", () => {
-    if (score >= 50) {
-        score -= 50;
-        passiveIncome++;
-        totalUpgrades++;
-        updateDisplay();
-        checkAchievements(); // Обновляем прогресс
-    }
-});
+        let currentLine = 0;
+        let timer;
 
-        document.getElementById("buy-maxclick").addEventListener("click", () => {
-    let maxUpgrades = Math.floor(score / 10); // Сколько раз можно купить улучшение
-    score -= maxUpgrades * 10; // Вычитаем стоимость всех покупок
-    clickValue += maxUpgrades; // Добавляем улучшения клика
-    updateDisplay();
-});
-document.getElementById("delete-data-button").addEventListener("click", () => {
-    let confirmation = confirm("Вы уверены, что хотите удалить все данные?");
-    if (confirmation) {
-        localStorage.clear(); // Очищаем localStorage
-        alert("Данные успешно удалены. Страница будет перезагружена.");
-        setTimeout(() => {
-            location.reload(); // Перезагружаем страницу
-        }, 500);
-    }
-});
-// Обработчик для кнопки "x2 клик"
-document.getElementById("upgrade-doubleclick").addEventListener("click", () => {
-    if (score >= 100) {
-        score -= 100;
-        clickValue *= 2; // Увеличиваем клик в 2 раза
-        updateDisplay();
-    } else {
-        alert("Недостаточно очков!");
-    }
-});
+        document.getElementById('startButton').addEventListener('click', startLearning);
+        document.getElementById('nextButton').addEventListener('click', checkInput);
 
-// Обработчик для кнопки "x2 пассивный доход"
-document.getElementById("upgrade-doublepassive").addEventListener("click", () => {
-    if (score >= 500) {
-        score -= 500;
-        passiveIncome *= 2; // Увеличиваем пассивный доход в 2 раза
-        updateDisplay();
-    } else {
-        alert("Недостаточно очков!");
-    }
-});
-
-
-document.getElementById("buy-maxpass").addEventListener("click", () => {
-    let maxUpgrades = Math.floor(score / 50); // Сколько раз можно купить пассивный доход
-    score -= maxUpgrades * 50; // Вычитаем стоимость всех покупок
-    passiveIncome += maxUpgrades; // Добавляем улучшения пассивного дохода
-    updateDisplay();
-});
-
-        setInterval(() => {
-            score += passiveIncome;
-            updateDisplay();
-        }, 1000);
-
-        function togglePanel() {
-            const panel = document.getElementById("menuBar");
-            const button = document.getElementById("toggleButton");
-            panel.style.bottom = panel.style.bottom === "0px" ? "-100px" : "0px";
-            button.style.bottom = panel.style.bottom === "0px" ? "61px" : "0px";
+        function startLearning() {
+            document.getElementById('startButton').classList.add('hidden');
+            document.getElementById('author').classList.add('hidden'); // Скрываем автора
+            showNextLine();
         }
-function formatNumber(num) {
-    const suffixes = [
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "Vt" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "NoDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "OcDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "SpDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "SxDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "QnDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "QdDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "TDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "DDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000_000, suffix: "UDe" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000_000, suffix: "De" },
-        { value: 1_000_000_000_000_000_000_000_000_000_000, suffix: "No" },
-        { value: 1_000_000_000_000_000_000_000_000_000, suffix: "Oc" },
-        { value: 1_000_000_000_000_000_000_000_000, suffix: "Sp" },
-        { value: 1_000_000_000_000_000_000_000, suffix: "Sx" },
-        { value: 1_000_000_000_000_000_000, suffix: "Qn" },
-        { value: 1_000_000_000_000_000, suffix: "Qd" },
-        { value: 1_000_000_000_000, suffix: "T" },
-        { value: 1_000_000_000, suffix: "B" },
-        { value: 1_000_000, suffix: "M" },
-        { value: 1_000, suffix: "K" }
-    ];
 
-    for (const { value, suffix } of suffixes) {
-        if (num >= value) {
-            return (num / value).toFixed(2) + suffix;
+        function showNextLine() {
+            if (currentLine >= poemLines.length) {
+                alert('Вы выучили всё стихотворение!');
+                return;
+            }
+
+            const poemElement = document.getElementById('poem');
+            const timerElement = document.getElementById('timer');
+            const inputSection = document.getElementById('inputSection');
+
+            poemElement.textContent = poemLines[currentLine];
+            poemElement.classList.remove('hidden');
+            timerElement.classList.remove('hidden');
+
+            startTimer(20, () => {
+                // После таймера скрываем строку и таймер
+                poemElement.classList.add('hidden');
+                timerElement.classList.add('hidden');
+
+                // Показываем поле ввода
+                inputSection.classList.remove('hidden');
+                document.getElementById('userInput').focus();
+            });
         }
-    }
+function startTimer(seconds, callback) {
+            let timeLeft = seconds;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = `Осталось времени: ${timeLeft} сек.`;
 
-    return num.toString();
-}
-          let isDrawing = false; // Флаг для отслеживания начала рисования
-let startX, startY; // Начальные координаты
-let points = []; // Массив для хранения точек жеста
+            timer = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `Осталось времени: ${timeLeft} сек.`;
 
-document.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 1) { // Проверяем, что касание одно
-        isDrawing = true;
-        startX = event.touches[0].clientX;
-        startY = event.touches[0].clientY;
-        points = [{ x: startX, y: startY }]; // Начинаем запись точек
-    }
-});
-
-document.addEventListener("touchmove", (event) => {
-    if (isDrawing) {
-        const currentX = event.touches[0].clientX;
-        const currentY = event.touches[0].clientY;
-        points.push({ x: currentX, y: currentY }); // Записываем текущие координаты
-    }
-});
-          
-
-document.addEventListener("touchend", () => {
-    if (isDrawing && points.length > 10) { // Проверяем, что жест достаточно длинный
-        const isCircle = detectCircleGesture(points); // Проверяем, был ли жест кругом
-        if (isCircle) {
-            openAdminMenu(); // Открываем админ-меню
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    callback();
+                }
+            }, 1000);
         }
-    }
-    isDrawing = false; // Сбрасываем флаг
-    points = []; // Очищаем массив точек
-});
 
-// Ф const hammer = new Hammer(document.body);
+        function checkInput() {
+            const userText = document.getElementById('userInput').value.trim();
+            if (userText === poemLines[currentLine]) {
+                currentLine++;
+                document.getElementById('userInput').value = '';
+                document.getElementById('inputSection').classList.add('hidden');
 
-        // Добавляем распознавание жеста "круг"
-        hammer.get('circle').set({ enable: true });
-
-        // Обрабатываем жест "круг"
-        hammer.on("circle", function(event) {
-            openAdminMenu(); // Открываем админ-меню
-        });
-function detectCircleGesture(points) {
-    const numPoints = points.length;
-    if (numPoints < 10) return false; // Жест слишком короткий
-
-    // Вычисляем центр жеста
-    let centerX = 0, centerY = 0;
-    for (const point of points) {
-        centerX += point.x;
-        centerY += point.y;
-    }
-    centerX /= numPoints;
-    centerY /= numPoints;
-
-    // Вычисляем средний радиус
-    let totalRadius = 0;
-    for (const point of points) {
-        const dx = point.x - centerX;
-        const dy = point.y - centerY;
-        totalRadius += Math.sqrt(dx * dx + dy * dy);
-    }
-    const avgRadius = totalRadius / numPoints;
-
-    // Проверяем, насколько точки близки к окружности
-    let error = 0;
-    for (const point of points) {
-        const dx = point.x - centerX;
-        const dy = point.y - centerY;
-        const radius = Math.sqrt(dx * dx + dy * dy);
-        error += Math.abs(radius - avgRadius);
-    }
-    error /= numPoints;
-
-    // Если ошибка меньше 20% от среднего радиуса, считаем жест кругом
-    return error < 0.2 * avgRadius;
-}
-
-// Функция для открытия админ-меню
-function openAdminMenu() {
-    document.getElementById("adminMenu").classList.remove("hidden");
-}
- function addPlayerToLeaderboard() {
-    const name = prompt("Введите ваше имя:");
-    if (name) {
-        savePlayerScore(name, score);
-        showLeaderboard(); // Обновляем таблицу лидеров
-    }
-}
-
-// Функция для закрытия админ-меню
-function closeAdminMenu() {
-    document.getElementById("adminMenu").classList.add("hidden");
-}
-// Функция для сохранения результата игрока
-function savePlayerScore(name, score) {
-    const players = JSON.parse(localStorage.getItem("players")) || [];
-    players.push({ name, score });
-    players.sort((a, b) => b.score - a.score); // Сортируем по убыванию очков
-    localStorage.setItem("players", JSON.stringify(players));
-}
-
-// Функция для отображения таблицы лидеров
-function showLeaderboard() {
-    const players = JSON.parse(localStorage.getItem("players")) || [];
-    const leaderboard = document.getElementById("liderMenu");
-
-    // Очищаем содержимое таблицы
-    leaderboard.innerHTML = "<h2 style='color: white;'>Таблица Лидеров</h2>";
-
-    if (players.length === 0) {
-        leaderboard.innerHTML += "<p style='color: white;'>В разработке...</p>";
-        return;
-    }
-
-    // Создаем таблицу
-    const table = document.createElement("table");
-    table.style.width = "100%";
-    table.style.color = "white";
-    table.style.borderCollapse = "collapse";
-    table.innerHTML = `
-        <tr>
-            <th style="border: 1px solid white; padding: 10px;">Имя</th>
-            <th style="border: 1px solid white; padding: 10px;">Очки</th>
-        </tr>
-    `;
-
-    // Добавляем строки с данными игроков
-    players.forEach((player, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td style="border: 1px solid white; padding: 10px;">${player.name}</td>
-            <td style="border: 1px solid white; padding: 10px;">${player.score}</td>
-        `;
-        table.appendChild(row);
-    });
-
-    leaderboard.appendChild(table);
-}
-
-// Функция для добавления игрока
-function addPlayerToLeaderboard() {
-    const name = prompt("Введите ваше имя:");
-    if (name) {
-        savePlayerScore(name, score);
-        showLeaderboard(); // Обновляем таблицу лидеров
-    }
-}
-function buySkin(skin) {
-    if (score >= skin.price) {
-        score -= skin.price;
-        currentSkin = skin.id;
-        document.getElementById("hamster").src = skin.image;
-        updateDisplay();
-        alert(`Вы купили скин: ${skin.name}`);
-        savePreferences(); // Сохраняем выбор
-    } else {
-        alert("Недостаточно очков!");
-    }
-}
-
-function buyBackground(background) {
-    if (score >= background.price) {
-        score -= background.price;
-        currentBackground = background.id;
-        document.querySelector(".background").style.backgroundImage = `url('${background.image}')`;
-        updateDisplay();
-        alert(`Вы купили фон: ${background.name}`);
-        savePreferences(); // Сохраняем выбор
-    } else {
-        alert("Недостаточно очков!");
-    }
-}
-      function renderShop() {
-    const skinsContainer = document.getElementById("skins-container");
-    const backgroundsContainer = document.getElementById("backgrounds-container");
-
-    // Очищаем контейнеры
-    skinsContainer.innerHTML = "";
-    backgroundsContainer.innerHTML = "";
-
-    // Отображаем скины
-    skins.forEach(skin => {
-        const skinDiv = document.createElement("div");
-        skinDiv.className = "shop-item";
-
-        const skinImage = document.createElement("img");
-        skinImage.src = skin.image;
-        skinImage.style.width = "100px"; // Размер изображения
-        skinImage.style.height = "100px";
-        skinImage.alt = skin.name;
-
-        const skinButton = document.createElement("button");
-        skinButton.className = "upgrade-button";
-        skinButton.innerHTML = `${skin.name} - ${skin.price} $Krml`;
-        skinButton.onclick = () => buySkin(skin);
-
-        skinDiv.appendChild(skinImage);
-        skinDiv.appendChild(skinButton);
-        skinsContainer.appendChild(skinDiv);
-    });
-
-    // Отображаем фоны
-    backgrounds.forEach(background => {
-        const backgroundDiv = document.createElement("div");
-        backgroundDiv.className = "shop-item";
-
-        const backgroundImage = document.createElement("img");
-        backgroundImage.src = background.image;
-        backgroundImage.style.width = "100px"; // Размер изображения
-        backgroundImage.style.height = "100px";
-        backgroundImage.alt = background.name;
-
-        const backgroundButton = document.createElement("button");
-        backgroundButton.className = "upgrade-button";
-        backgroundButton.innerHTML = `${background.name} - ${background.price} $Krml`;
-        backgroundButton.onclick = () => buyBackground(background);
-
-        backgroundDiv.appendChild(backgroundImage);
-        backgroundDiv.appendChild(backgroundButton);
-        backgroundsContainer.appendChild(backgroundDiv);
-    });
-}
-          function savePreferences() {
-    localStorage.setItem("currentSkin", currentSkin);
-    localStorage.setItem("currentBackground", currentBackground);
-}
-          function loadPreferences() {
-    // Загружаем сохранённые значения из localStorage
-    currentSkin = localStorage.getItem("currentSkin") || "default";
-    currentBackground = localStorage.getItem("currentBackground") || "default";
-
-    // Применяем сохранённые скин и фон
-    const selectedSkin = skins.find(skin => skin.id === currentSkin);
-    const selectedBackground = backgrounds.find(background => background.id === currentBackground);
-
-    if (selectedSkin) {
-        document.getElementById("hamster").src = selectedSkin.image;
-    }
-    if (selectedBackground) {
-        document.querySelector(".background").style.backgroundImage = `url('${selectedBackground.image}')`;
-    }
-}
-function savePreferences() {
-    localStorage.setItem("currentSkin", currentSkin);
-    localStorage.setItem("currentBackground", currentBackground);
-    console.log("Сохранено в localStorage:", { currentSkin, currentBackground });
-}
-
-function loadPreferences() {
-    currentSkin = localStorage.getItem("currentSkin") || "default";
-    currentBackground = localStorage.getItem("currentBackground") || "default";
-    console.log("Загружено из localStorage:", { currentSkin, currentBackground });
-
-    // Применяем сохранённые скин и фон
-    const selectedSkin = skins.find(skin => skin.id === currentSkin);
-    const selectedBackground = backgrounds.find(background => background.id === currentBackground);
-
-    if (selectedSkin) {
-        document.getElementById("hamster").src = selectedSkin.image;
-    }
-    if (selectedBackground) {
-        document.querySelector(".background").style.backgroundImage = `url('${selectedBackground.image}')`;
-    }
-}
-
-window.onload = () => {
-    loadPreferences(); // Загружаем сохранённые настройки
-    updateDisplay(); // Обновляем отображение
-};
-
-// Функция для выдачи монет (пример)
-function giveCoins() {
-    let amount = prompt("Введите количество монет:");
-    amount = parseInt(amount);
-    if (!isNaN(amount) && amount > 0) {
-        score += amount;
-        updateDisplay();
-        alert(`Выдано ${amount} монет!`);
-    } else {
-        alert("Некорректное число!");
-    }
-}
-          let inputBuffer = ""; // Буфер ввода
-const secretCode = "сигма"; // Тайное слово
-const adminPassword = "сигма"; // Пароль для входа в админ-меню
-
-document.addEventListener("keydown", function (event) {
-    inputBuffer += event.key.toLowerCase(); // Добавляем введённый символ
-    inputBuffer = inputBuffer.slice(-secretCode.length); // Ограничиваем длину
-
-    if (inputBuffer === secretCode) {
-        showAdminLogin(); // Показываем окно ввода пароля
-        inputBuffer = ""; // Очищаем буфер
-    }
-});
-  function showMenu(menuId) {
-    const menus = ["mainMenu", "upgradeMenu", "magazMenu", "liderMenu", "profilMenu", "achievementsMenu"];
-    menus.forEach((id) => {
-        const menu = document.getElementById(id);
-        if (menu) {
-            menu.classList.add("hidden");
+                if (currentLine < poemLines.length) {
+                    showNextLine();
+                } else {
+                    alert('Вы выучили всё стихотворение!');
+                }
+            } else {
+                alert('Неверно! Попробуйте ещё раз.');
+            }
         }
-    });
-
-    const selectedMenu = document.getElementById(menuId);
-    if (selectedMenu) {
-        selectedMenu.classList.remove("hidden");
-    }
-if (menuId === "liderMenu") {
-        showLeaderboard();
-    } else if (menuId === "achievementsMenu") {
-        showAchievements();
-    }
-    // Если открывается таблица лидеров, обновляем её
-   if (menuId === "magazMenu") {
-        renderShop();
-
-        const saveButton = document.getElementById('save-score-button');
-        if (saveButton) {
-            saveButton.addEventListener('click', addPlayerToLeaderboard);
-        } else {
-            console.error('Элемент save-score-button не найден');
-        }
-   }
-}
-
-function showAdminLogin() {
-    let password = prompt("Введите пароль администратора:");
-    if (password === adminPassword) {
-        openAdminMenu();
-    } else {
-        alert("Неверный пароль!");
-    }
-}
-
-function openAdminMenu() {
-    document.getElementById("adminMenu").classList.remove("hidden");
-    alert("Добро пожаловать в админ-меню!");
-}
-        updateDisplay();
-  </script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"> </script>
+    </script>
 </body>
 </html>
