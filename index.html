@@ -67,14 +67,14 @@
     </style>
 </head>
 <body>
-    <h1>Запомни и повтори последовательность</h1>
+    <h1 id="levelText">Запомни и повтори последовательность</h1>
     <button id="startBtn">Начать</button>
     <div class="buttons-container">
         <button class="btn" data-color="red">😃</button>
         <button class="btn" data-color="blue">🍕</button>
         <button class="btn" data-color="green">🏆</button>
         <button class="btn" data-color="yellow">🎵</button>
-        <button class="btn" data-color="purple" id="adminTrigger">❤️</button>
+        <button class="btn" data-color="purple">❤️</button>
         <button class="btn" data-color="orange">🔥</button>
         <button class="btn" data-color="pink">🌟</button>
         <button class="btn" data-color="cyan">🚀</button>
@@ -94,11 +94,11 @@
         const buttons = document.querySelectorAll('.btn');
         const startBtn = document.getElementById('startBtn');
         const message = document.getElementById('message');
-        const adminTrigger = document.getElementById('adminTrigger');
         const adminMenu = document.getElementById('adminMenu');
         const levelSelectBtn = document.getElementById('levelSelectBtn');
         const levelSelect = document.getElementById('levelSelect');
         const closeAdminBtn = document.getElementById('closeAdminBtn');
+        const levelText = document.getElementById('levelText');
         let sequence = [];
         let playerSequence = [];
         let level = 1;
@@ -166,7 +166,7 @@
             }
         }
 
-        adminTrigger.addEventListener('click', () => {
+        levelText.addEventListener('click', () => {
             adminClicks++;
             if (adminClicks >= 20) {
                 adminMenu.style.display = 'block';
