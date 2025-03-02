@@ -3,172 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Изучение стихотворения</title>
+    <title>Игра: Повтори последовательность</title>
     <style>
-       body {
-    font-family: 'Georgia', serif;
-    background: linear-gradient(135deg, #ffffff, #ffffff, #ffffff, #2f00ff, #2f00ff, #2f00ff, #ff0000, #ff0000, #ff0000); /* Многоцветный градиент */
-    background-size: 400% 400%; /* Увеличиваем размер фона для анимации */
-    color: #ffffff;
-    text-align: center;
-    padding: 50px;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    animation: gradientBG 50s ease infinite; /* Анимация фона */
-}
-
-@keyframes gradientBG {
-    0% {
-        background-position: 0% 50%; /* Начальная позиция градиента */
-    }
-    50% {
-        background-position: 100% 50%; /* Промежуточная позиция градиента */
-    }
-    100% {
-        background-position: 0% 50%; /* Конечная позиция градиента */
-    }
-}
-        h1 {
-            font-size: 1em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 90px;
+        body {
+          text-align: center;
+          font-family: Arial, sans-serif;
+          background-color: #7d7d7d;
+          color: white;
         }
-        .poem {
-            font-style: italic;
-            font-size: 1.5em;
-            line-height: 1.6;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            max-width: 600px;
-            margin: 20px auto;
-        }
-        .author {
-            font-weight: bold;
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
             margin-top: 20px;
-            font-size: 2em;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #555;
+            padding: 20px;
+            border-radius: 15px;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 2em;
-            margin-top: 20px;
+        .btn {
+            width: 90px;
+            height: 90px;
+            font-size: 25px;
+            border-radius: 15px;
             cursor: pointer;
-            background-color: #0288d1;
-            color: #ffffff;
             border: none;
-            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
-        .input-field {
+        .btn[data-color="red"] { background-color: #e74c3c; }
+        .btn[data-color="blue"] { background-color: #3498db; }
+        .btn[data-color="green"] { background-color: #2ecc71; }
+        .btn[data-color="yellow"] { background-color: #f1c40f; }
+        .btn[data-color="purple"] { background-color: #9b59b6; }
+        .btn[data-color="orange"] { background-color: #e67e22; }
+        .btn[data-color="pink"] { background-color: #ff69b4; }
+        .btn[data-color="cyan"] { background-color: #1abc9c; }
+        .btn[data-color="gray"] { background-color: #95a5a6; }
+        
+        #startBtn, #levelSelectBtn {
             margin-top: 20px;
+            font-size: 18px;
             padding: 10px;
-            font-size: 2em;
-            width: 300px;
+            cursor: pointer;
         }
-        .timer {
-            font-size: 1.3em;
-            margin-top: 20px;
-        }
-        .hidden {
+        #adminMenu {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <h1>Прощай, немытая Россия</h1>
-    <div class="poem hidden" id="poem"></div>
-    <div class="author" id="author">— Михаил Лермонтов</div>
-    <button id="startButton">Начать учить</button>
-    
-    <div class="timer hidden" id="timer"></div>
+    <h1>Запомни и повтори последовательность</h1>
+    <button id="startBtn">Начать</button>
+    <div class="buttons-container">
+        <button class="btn" data-color="red">😃</button>
+        <button class="btn" data-color="blue">🍕</button>
+        <button class="btn" data-color="green">🏆</button>
+        <button class="btn" data-color="yellow">🎵</button>
+        <button class="btn" data-color="purple" id="adminTrigger">❤️</button>
+        <button class="btn" data-color="orange">🔥</button>
+        <button class="btn" data-color="pink">🌟</button>
+        <button class="btn" data-color="cyan">🚀</button>
+        <button class="btn" data-color="gray">🎉</button>
+    </div>
+    <p id="message"></p>
 
-    <div class="hidden" id="inputSection">
-        <input type="text" class="input-field" id="userInput" placeholder="Введите строку...">
-        <button id="nextButton">Дальше</button>
+    <div id="adminMenu">
+        <h2>Админ-меню</h2>
+        <label for="levelSelect">Выберите уровень:</label>
+        <input type="number" id="levelSelect" min="1" max="20" value="1">
+        <button id="levelSelectBtn">Выбрать</button>
     </div>
 
     <script>
-        const poemLines = [
-            "Прощай немытая Россия",
-            "Страна рабов страна господ",
-            "И вы мундиры голубые",
-            "И ты им преданный народ",
-            "Быть может за стеной Кавказа",
-            "Сокроюсь от твоих пашей",
-            "От их всевидящего глаза",
-            "От их всеслышащих ушей"
-        ];
+        const buttons = document.querySelectorAll('.btn');
+        const startBtn = document.getElementById('startBtn');
+        const message = document.getElementById('message');
+        const adminTrigger = document.getElementById('adminTrigger');
+        const adminMenu = document.getElementById('adminMenu');
+        const levelSelectBtn = document.getElementById('levelSelectBtn');
+        const levelSelect = document.getElementById('levelSelect');
+        let sequence = [];
+        let playerSequence = [];
+        let level = 1;
+        const maxLevel = 20;
+        let adminClicks = 0;
 
-        let currentLine = 0;
-        let timer;
-
-        document.getElementById('startButton').addEventListener('click', startLearning);
-        document.getElementById('nextButton').addEventListener('click', checkInput);
-
-        function startLearning() {
-            document.getElementById('startButton').classList.add('hidden');
-            document.getElementById('author').classList.add('hidden'); // Скрываем автора
-            showNextLine();
+        function getRandomButton() {
+            return buttons[Math.floor(Math.random() * buttons.length)];
         }
 
-        function showNextLine() {
-            if (currentLine >= poemLines.length) {
-                alert('Вы выучили всё стихотворение!');
+        function playSequence() {
+            playerSequence = [];
+            message.textContent = `Уровень ${level}`;
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i >= sequence.length) {
+                    clearInterval(interval);
+                    return;
+                }
+                flashButton(sequence[i]);
+                i++;
+            }, 800);
+        }
+
+        function flashButton(button) {
+            const originalColor = getComputedStyle(button).backgroundColor;
+            const brightenedColor = lightenColor(originalColor, 30);
+            button.style.backgroundColor = brightenedColor;
+            setTimeout(() => { 
+                button.style.backgroundColor = originalColor;
+            }, 400);
+        }
+
+        function lightenColor(rgb, percent) {
+            let rgbValues = rgb.match(/\d+/g).map(Number);
+            let amt = Math.round(2.55 * percent);
+            let r = Math.min(rgbValues[0] + amt, 255);
+            let g = Math.min(rgbValues[1] + amt, 255);
+            let b = Math.min(rgbValues[2] + amt, 255);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function startGame() {
+            level = 1;
+            sequence = [];
+            nextLevel();
+        }
+
+        function nextLevel() {
+            if (level > maxLevel) {
+                message.textContent = 'Поздравляем! Вы прошли все уровни! Пароль: hulk1488';
                 return;
             }
+            sequence.push(getRandomButton());
+            playSequence();
+        }
 
-            const poemElement = document.getElementById('poem');
-            const timerElement = document.getElementById('timer');
-            const inputSection = document.getElementById('inputSection');
-
-            poemElement.textContent = poemLines[currentLine];
-            poemElement.classList.remove('hidden');
-            timerElement.classList.remove('hidden');
-
-            startTimer(20, () => {
-                // После таймера скрываем строку и таймер
-                poemElement.classList.add('hidden');
-                timerElement.classList.add('hidden');
-
-                // Показываем поле ввода
-                inputSection.classList.remove('hidden');
-                document.getElementById('userInput').focus();
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                playerSequence.push(button);
+                flashButton(button);
+                checkSequence();
             });
-        }
-function startTimer(seconds, callback) {
-            let timeLeft = seconds;
-            const timerElement = document.getElementById('timer');
-            timerElement.textContent = `Осталось времени: ${timeLeft} сек.`;
+        });
 
-            timer = setInterval(() => {
-                timeLeft--;
-                timerElement.textContent = `Осталось времени: ${timeLeft} сек.`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    callback();
+        function checkSequence() {
+            for (let i = 0; i < playerSequence.length; i++) {
+                if (playerSequence[i] !== sequence[i]) {
+                    message.textContent = 'Ошибка! Начинаем заново...';
+                    setTimeout(startGame, 1000);
+                    return;
                 }
-            }, 1000);
-        }
-
-        function checkInput() {
-            const userText = document.getElementById('userInput').value.trim();
-            if (userText === poemLines[currentLine]) {
-                currentLine++;
-                document.getElementById('userInput').value = '';
-                document.getElementById('inputSection').classList.add('hidden');
-
-                if (currentLine < poemLines.length) {
-                    showNextLine();
-                } else {
-                    alert('Вы выучили всё стихотворение!');
-                }
-            } else {
-                alert('Неверно! Попробуйте ещё раз.');
+            }
+            if (playerSequence.length === sequence.length) {
+                message.textContent = 'Правильно! Следующий уровень...';
+                setTimeout(() => {
+                    level++;
+                    nextLevel();
+                }, 1000);
             }
         }
+
+        adminTrigger.addEventListener('click', () => {
+            adminClicks++;
+            if (adminClicks >= 20) {
+                adminMenu.style.display = 'block';
+            }
+        });
+
+        levelSelectBtn.addEventListener('click', () => {
+            level = parseInt(levelSelect.value) || 1;
+            adminMenu.style.display = 'none';
+            startGame();
+        });
+
+        startBtn.addEventListener('click', startGame);
     </script>
 </body>
 </html>
