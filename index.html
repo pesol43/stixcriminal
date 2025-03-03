@@ -18,30 +18,44 @@
             height: 100vh;
             flex-direction: column;
         }
+      h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+      }
+      p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+      }
         .buttons-container {
             display: grid;
-            grid-template-columns: repeat(3, 100px);
+            grid-template-columns: repeat(3, 120px);
             gap: 15px;
             margin-top: 20px;
-            background-color: #34495e;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
         .btn {
-            width: 100px;
-            height: 100px;
-            font-size: 25px;
+            width: 120px;
+            height: 120px;
+            font-size: 30px;
             font-weight: bold;
-            border-radius: 15px;
+            border-radius: 20px;
             cursor: pointer;
             border: none;
             color: white;
             position: relative;
             overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             -webkit-tap-highlight-color: transparent;
+            transform-style: preserve-3d;
         }
         .btn::before {
             content: '';
@@ -58,8 +72,8 @@
             opacity: 1;
         }
         .btn:active {
-            transform: scale(0.95);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transform: scale(0.95) translateZ(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         .btn[data-color="red"] { background: linear-gradient(45deg, #e74c3c, #c0392b); }
         .btn[data-color="blue"] { background: linear-gradient(45deg, #3498db, #2980b9); }
@@ -76,9 +90,9 @@
         }
 
         @keyframes press {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.95); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1) translateZ(0); }
+            50% { transform: scale(0.95) translateZ(10px); }
+            100% { transform: scale(1) translateZ(0); }
         }
 
         @keyframes glow {
@@ -89,11 +103,11 @@
 
         #startBtn, #promoBtn, #levelSelectBtn, #closeAdminBtn, #addAttemptsBtn, #closePromoBtn, #submitPromoBtn {
             margin: 10px;
-            font-size: 18px;
-            padding: 10px 20px;
+            font-size: 20px;
+            padding: 20px 20px;
             cursor: pointer;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             background: linear-gradient(45deg, #3498db, #2980b9);
             color: white;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
@@ -104,32 +118,75 @@
             transform: scale(0.95);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-
-        #adminMenu, #promoMenu {
+ #adminMenu, #promoMenu {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #34495e;
-            padding: 20px;
-            border-radius: 15px;
+            background: rgba(52, 73, 94, 0.9);
+            padding: 25px;
+            border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
+            color: white;
+            backdrop-filter: blur(10px);
+   z-index: 999999999999;
+        }
+        #adminMenu h2, #promoMenu h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
             color: white;
         }
         #adminMenu input, #promoMenu input {
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 10px;
             border: none;
             margin: 10px 0;
             width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
             -webkit-tap-highlight-color: transparent;
         }
         #adminMenu button, #promoMenu button {
             margin: 5px;
             -webkit-tap-highlight-color: transparent;
         }
+      #adminMenu input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin: 10px 0;
+    width: 60%; /* Уменьшаем ширину поля ввода */
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#adminMenu button {
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#adminMenu button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#adminMenu div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
     </style>
 </head>
 <body>
@@ -153,13 +210,19 @@
     <p id="attemptsText">Попыток осталось: 3</p>
 
     <div id="adminMenu">
-        <h2>Админ-меню</h2>
-        <label for="levelSelect">Выберите уровень:</label>
-        <input type="number" id="levelSelect" min="1" max="30" value="1">
+    <h2>Админ-меню</h2>
+    <label for="levelSelect">Выберите уровень:</label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="number" id="levelSelect" min="1" max="60" value="1">
         <button id="levelSelectBtn">Выбрать</button>
-        <button id="addAttemptsBtn">Выдать 5 попыток</button>
-        <button id="closeAdminBtn">Закрыть</button>
     </div>
+    <label for="addAttemptsInput">Количество попыток:</label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="number" id="addAttemptsInput" min="1" value="1">
+        <button id="addAttemptsBtn">Выдать попытки</button>
+    </div>
+    <button id="closeAdminBtn">Закрыть</button>
+</div>
 
     <div id="promoMenu">
         <h2>Введите промокод</h2>
@@ -180,6 +243,7 @@
         const levelSelect = document.getElementById('levelSelect');
         const closeAdminBtn = document.getElementById('closeAdminBtn');
         const addAttemptsBtn = document.getElementById('addAttemptsBtn');
+        const addAttemptsInput = document.getElementById('addAttemptsInput');
         const closePromoBtn = document.getElementById('closePromoBtn');
         const submitPromoBtn = document.getElementById('submitPromoBtn');
         const promoInput = document.getElementById('promoInput');
@@ -187,8 +251,7 @@
         let sequence = [];
         let playerSequence = [];
         let level = 1;
-        const maxLevel = 30;
-        let adminClicks = 0;
+        const maxLevel = 60;
 
         // Загрузка попыток и использованных промокодов из localStorage
         let attempts = parseInt(localStorage.getItem('attempts'));
@@ -206,7 +269,8 @@
             "PopIt": 5,
             "SimplDimpl": 5,
             "Secret5": 5,
-            "Popit5": 5
+            "Popit5": 5,
+            "pikmi": "admin" // Промокод для открытия админ-меню
         };
 
         // Обновление текста попыток
@@ -215,8 +279,7 @@
         function getRandomButton() {
             return buttons[Math.floor(Math.random() * buttons.length)];
         }
-
-        function playSequence() {
+function playSequence() {
             playerSequence = [];
             message.textContent = `Уровень ${level}`;
             let i = 0;
@@ -234,8 +297,7 @@
             button.classList.add('active');
             setTimeout(() => button.classList.remove('active'), 500);
         }
-
-        function startGame() {
+function startGame() {
             level = 1;
             sequence = [];
             nextLevel();
@@ -274,20 +336,24 @@
                 }, 1000);
             }
         }
-
-        function usePromoCode() {
+function usePromoCode() {
             const promo = promoInput.value.trim();
-            if (usedPromoCodes.includes(promo)) {
-                alert("Этот промокод уже использован.");
-                return;
-            }
             if (promoCodes[promo]) {
-                attempts += promoCodes[promo];
-                usedPromoCodes.push(promo); // Добавляем промокод в список использованных
-                localStorage.setItem('attempts', attempts); // Сохраняем попытки
-                localStorage.setItem('usedPromoCodes', JSON.stringify(usedPromoCodes)); // Сохраняем промокоды
-                attemptsText.textContent = `Попыток осталось: ${attempts}`;
-                alert(`Промокод активирован! +${promoCodes[promo]} попыток.`);
+                if (promoCodes[promo] === "admin") {
+                    adminMenu.style.display = 'block'; // Открываем админ-меню
+                    alert("Админ-меню открыто!");
+                } else {
+                    if (usedPromoCodes.includes(promo)) {
+                        alert("Этот промокод уже использован.");
+                        return;
+                    }
+                    attempts += promoCodes[promo];
+                    usedPromoCodes.push(promo); // Добавляем промокод в список использованных
+                    localStorage.setItem('attempts', attempts); // Сохраняем попытки
+                    localStorage.setItem('usedPromoCodes', JSON.stringify(usedPromoCodes)); // Сохраняем промокоды
+                    attemptsText.textContent = `Попыток осталось: ${attempts}`;
+                    alert(`Промокод активирован! +${promoCodes[promo]} попыток.`);
+                }
                 promoInput.value = ''; // Очищаем поле ввода
             } else {
                 alert("Неверный промокод.");
@@ -302,13 +368,6 @@
             });
         });
 
-        levelText.addEventListener('click', () => {
-            adminClicks++;
-            if (adminClicks >= 20) {
-                adminMenu.style.display = 'block';
-            }
-        });
-
         levelSelectBtn.addEventListener('click', () => {
             level = parseInt(levelSelect.value) || 1;
             sequence = [];
@@ -317,10 +376,11 @@
         });
 
         addAttemptsBtn.addEventListener('click', () => {
-            attempts += 5;
+            const attemptsToAdd = parseInt(addAttemptsInput.value) || 1;
+            attempts += attemptsToAdd;
             localStorage.setItem('attempts', attempts); // Сохраняем попытки
             attemptsText.textContent = `Попыток осталось: ${attempts}`;
-            alert("Добавлено 5 попыток!");
+            alert(`Добавлено ${attemptsToAdd} попыток!`);
         });
 
         closeAdminBtn.addEventListener('click', () => {
