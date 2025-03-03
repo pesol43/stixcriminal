@@ -41,7 +41,7 @@
             overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-            -webkit-tap-highlight-color: transparent; /* Убираем подсветку */
+            -webkit-tap-highlight-color: transparent;
         }
         .btn::before {
             content: '';
@@ -98,7 +98,7 @@
             color: white;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            -webkit-tap-highlight-color: transparent; /* Убираем подсветку */
+            -webkit-tap-highlight-color: transparent;
         }
         #startBtn:active, #promoBtn:active, #levelSelectBtn:active, #closeAdminBtn:active, #addAttemptsBtn:active, #closePromoBtn:active {
             transform: scale(0.95);
@@ -124,11 +124,11 @@
             border: none;
             margin: 10px 0;
             width: 100%;
-            -webkit-tap-highlight-color: transparent; /* Убираем подсветку */
+            -webkit-tap-highlight-color: transparent;
         }
         #adminMenu button, #promoMenu button {
             margin: 5px;
-            -webkit-tap-highlight-color: transparent; /* Убираем подсветку */
+            -webkit-tap-highlight-color: transparent;
         }
     </style>
 </head>
@@ -191,8 +191,14 @@
         let adminClicks = 0;
 
         // Загрузка попыток и использованных промокодов из localStorage
-        let attempts = parseInt(localStorage.getItem('attempts')) || 3;
+        let attempts = parseInt(localStorage.getItem('attempts'));
         let usedPromoCodes = JSON.parse(localStorage.getItem('usedPromoCodes')) || [];
+
+        // Если попыток нет в localStorage, устанавливаем значение по умолчанию (3)
+        if (isNaN(attempts)) {
+            attempts = 3;
+            localStorage.setItem('attempts', attempts); // Сохраняем начальное значение
+        }
 
         // Промокоды и их бонусы
         const promoCodes = {
