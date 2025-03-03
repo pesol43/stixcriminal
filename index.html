@@ -41,6 +41,7 @@
             overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            -webkit-tap-highlight-color: transparent; /* Убираем подсветку */
         }
         .btn::before {
             content: '';
@@ -97,6 +98,7 @@
             color: white;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            -webkit-tap-highlight-color: transparent; /* Убираем подсветку */
         }
         #startBtn:active, #promoBtn:active, #levelSelectBtn:active, #closeAdminBtn:active, #addAttemptsBtn:active, #closePromoBtn:active {
             transform: scale(0.95);
@@ -122,9 +124,11 @@
             border: none;
             margin: 10px 0;
             width: 100%;
+            -webkit-tap-highlight-color: transparent; /* Убираем подсветку */
         }
         #adminMenu button, #promoMenu button {
             margin: 5px;
+            -webkit-tap-highlight-color: transparent; /* Убираем подсветку */
         }
     </style>
 </head>
