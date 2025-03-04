@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Игра: Повтори последовательность</title>
     <style>
         /* Основные стили */
@@ -18,6 +18,7 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+          overflow: hidden;
         }
         h1 {
             font-size: 2.2rem;
@@ -34,6 +35,11 @@
             color: #00ffcc;
             margin-bottom: 10px;
             text-shadow: 0 0 5px #00ffcc;
+        }
+       d {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
         .buttons-container {
             display: grid;
@@ -285,6 +291,12 @@
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+      #promoResult {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
 
 #promoBtn:hover {
     transform: scale(1.05);
@@ -351,6 +363,7 @@
 <body>
     <!-- Главное меню с кнопкой "Играть" -->
     <div id="mainMenu">
+      <h1 id="levelText">Запомни и повтори последовательность</h1>
         <button id="playBtn">Играть</button>
     </div>
 
@@ -400,11 +413,12 @@
 
     <!-- Меню промокодов -->
     <div id="promoMenu">
-        <h2>Введите промокод</h2>
-        <input type="text" id="promoInput" placeholder="Введите промокод">
-        <button id="submitPromoBtn">Активировать</button>
-        <button id="closePromoBtn">Закрыть</button>
-    </div>
+    <h2>Введите промокод</h2>
+    <input type="text" id="promoInput" placeholder="Введите промокод">
+    <button id="submitPromoBtn">Активировать</button>
+    <button id="closePromoBtn">Закрыть</button>
+    <d id="promoResult"></d> <!-- Новый элемент для отображения результата -->
+</div>
 
     <script>
         const buttons = document.querySelectorAll('.btn');
@@ -523,31 +537,35 @@
                 }, 1000);
             }
         }
+function usePromoCode() {
+    const promo = promoInput.value.trim();
+    const promoResult = document.getElementById('promoResult'); // Получаем элемент для отображения результата
 
-        function usePromoCode() {
-            const promo = promoInput.value.trim();
-            if (promoCodes[promo]) {
-                if (promoCodes[promo] === "admin") {
-                    adminMenu.style.display = 'block'; // Открываем админ-меню
-                    alert("Админ-меню открыто!");
-                } else {
-                    if (usedPromoCodes.includes(promo)) {
-                        alert("Этот промокод уже использован.");
-                        return;
-                    }
-                    attempts += promoCodes[promo];
-                    usedPromoCodes.push(promo); // Добавляем промокод в список использованных
-                    localStorage.setItem('attempts', attempts); // Сохраняем попытки
-                    localStorage.setItem('usedPromoCodes', JSON.stringify(usedPromoCodes)); // Сохраняем промокоды
-                    attemptsText.textContent = `Попыток осталось: ${attempts}`;
-                    alert(`Промокод активирован! +${promoCodes[promo]} попыток.`);
-                }
-                promoInput.value = ''; // Очищаем поле ввода
-            } else {
-                alert("Неверный промокод.");
+    if (promoCodes[promo]) {
+        if (promoCodes[promo] === "admin") {
+            adminMenu.style.display = 'block'; // Открываем админ-меню
+            promoResult.textContent = "Админ-меню открыто!"; // Отображаем результат
+            promoResult.style.color = "#00ffcc"; // Зеленый цвет текста
+        } else {
+            if (usedPromoCodes.includes(promo)) {
+                promoResult.textContent = "Этот промокод уже использован."; // Отображаем результат
+                promoResult.style.color = "red"; // Красный цвет текста
+                return;
             }
+            attempts += promoCodes[promo];
+            usedPromoCodes.push(promo); // Добавляем промокод в список использованных
+            localStorage.setItem('attempts', attempts); // Сохраняем попытки
+            localStorage.setItem('usedPromoCodes', JSON.stringify(usedPromoCodes)); // Сохраняем промокоды
+            attemptsText.textContent = `Попыток осталось: ${attempts}`;
+            promoResult.textContent = `Промокод активирован! +${promoCodes[promo]} попыток.`; // Отображаем результат
+            promoResult.style.color = "#02fa0b"; // Зеленый цвет текста
         }
-
+        promoInput.value = ''; // Очищаем поле ввода
+    } else {
+        promoResult.textContent = "Неверный промокод."; // Отображаем результат
+        promoResult.style.color = "red"; // Красный цвет текста
+    }
+}
         buttons.forEach(button => {
             button.addEventListener('click', () => {
                 playerSequence.push(button);
