@@ -35,7 +35,6 @@
             margin-bottom: 10px;
             text-shadow: 0 0 5px #00ffcc;
         }
-
         .buttons-container {
             display: grid;
             grid-template-columns: repeat(3, 90px);
@@ -45,7 +44,7 @@
             padding: 10px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(255, 0, 13, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 13, 0.5);
             justify-content: center;
             place-items: center;
             max-width: 100%;
@@ -83,11 +82,14 @@
         .btn:hover::before {
             opacity: 1;
         }
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+}
 
-        .btn:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
-        }
+.btn:active {
+    transform: scale(0.95);
+      }
 
         .btn[data-color="red"] { background: linear-gradient(45deg, #ff416c, #ff4b2b); }
         .btn[data-color="blue"] { background: linear-gradient(45deg, #00b4db, #0083b0); }
@@ -148,7 +150,7 @@
             transform: scale(0.95);
             box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
         }
-      #startBtn, #promoBtn {
+      #startBtn {
     margin: 10px;
     font-size: 20px;
     padding: 15px 30px;
@@ -161,7 +163,7 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-#startBtn:hover, #promoBtn:hover {
+#startBtn:hover {
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
 }
@@ -169,71 +171,59 @@
 #startBtn:active, #promoBtn:active {
     transform: scale(0.95);
 }
-
-        #adminMenu, #promoMenu, #difficultyMenu {
-            display: none;
+#difficultyMenu {
+    display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.9); /* Черный фон с прозрачностью */
-            padding: 70px;
+            padding: 40px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
             box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
             text-align: center;
             color: white;
-        }
-      #adminMenu{
-           display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9); /* Черный фон с прозрачностью */
-            padding: 10px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
-            text-align: center;
-            color: white;
-        }
-        #adminMenu h2, #promoMenu h2 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #00ffcc;
-            text-shadow: 0 0 10px #00ffcc;
-        }
-     #difficultyMenu h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #00ffcc;
-    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-    margin-bottom: 40px; /* Увеличил отступ снизу */
-    animation: glowText 5s infinite alternate;
-    text-align: center;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-family: 'Orbitron', sans-serif;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 255, 204, 0.9);
-    margin-top: -30px; /* Поднял заголовок выше */
+    width: 300px; /* Уменьшенная ширина */
 }
 
+#difficultyMenu h2 {
+    font-size: 2rem; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    color: #00ffcc; /* Цвет текста */
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; /* Тень текста с эффектом свечения */
+    margin-bottom: 80px; /* Отступ снизу */
+    animation: glowText 5s infinite alternate; /* Анимация свечения текста */
+    text-align: center; /* Выравнивание текста по центру */
+    letter-spacing: 2px; /* Расстояние между буквами */
+    text-transform: uppercase; /* Преобразование текста в верхний регистр */
+    font-family: 'Orbitron', sans-serif; /* Шрифт */
+    padding: 10px; /* Внутренний отступ */
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    border-radius: 10px; /* Закругленные углы */
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.5); /* Тень с эффектом свечения */
+}
 #difficultyMenu button {
-    margin: 10px;
-    padding: 10px 25px; /* Увеличил отступы для кнопок */
-    font-size: 1.2rem; /* Увеличил размер шрифта */
-    border-radius: 15px;
+    margin: 8px;
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
     border: none;
     background: linear-gradient(45deg, #32cfaf, #32cfaf);
-    color: white;
+    color: black;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    width: 200px; /* Фиксированная ширина для кнопок */
+    width: 90%;
     text-align: center;
+    line-height: 1.5; /* Увеличиваем межстрочный интервал */
+  font-size: 1rem; /* Размер шрифта */
+    font-weight: bold;
+}
+
+#difficultyMenu button br {
+    display: block; /* Делаем перенос строки видимым */
+    content: ""; /* Добавляем пустое содержимое */
+    margin-top: 2px;/* Отступ между строками */
 }
 
 #difficultyMenu button:hover {
@@ -244,29 +234,123 @@
 #difficultyMenu button:active {
     transform: scale(0.95);
 }
+#promoMenu {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 10px; /* Уменьшенный padding */
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+    text-align: center;
+    color: white;
+    width: 300px; /* Уменьшенная ширина */
+}
 
-        #adminMenu input, #promoMenu input {
-            padding: 15px;
+#promoMenu h2 {
+    font-size: 1.5rem; /* Уменьшенный размер шрифта */
+    margin-bottom: 10px; /* Уменьшенный отступ */
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+#promoMenu input {
+    padding: 8px; /* Уменьшенный padding */
+    font-size: 1rem; /* Уменьшенный размер шрифта */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px; /* Уменьшенный радиус */
+    color: white;
+    margin-bottom: 8px; /* Уменьшенный отступ */
+    width: 90%; /* Уменьшенная ширина */
+}
+
+#promoMenu button {
+    margin: 4px; /* Уменьшенный отступ */
+    padding: 8px 16px; /* Уменьшенный padding */
+    border-radius: 8px; /* Уменьшенный радиус */
+    border: none;
+    background: linear-gradient(45deg, #00ffcc, #00ccaa);
+    color: black;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 1rem; /* Уменьшенный размер шрифта */
+}
+      #promoBtn {
+    margin: 10px;
             font-size: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-        }
-
-        #adminMenu button, #promoMenu button {
-            margin: 5px;
-            padding: 10px 10px;
-            border-radius: 10px;
-            border: none;
-            background: linear-gradient(45deg, #00ffcc, #00ccaa);
-            color: white;
+            padding: 15px 30px;
             cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #00755e, #018268, #00755e);
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        #adminMenu button:active, #promoMenu button:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
-        }
+}
+
+#promoBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+}
+
+#promoBtn:active, #promoBtn:active {
+    transform: scale(0.95);
+      }
+      #adminMenu {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 10px; /* Уменьшенный padding */
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+    text-align: center;
+    color: white;
+    width: 300px; /* Уменьшенная ширина */
+}
+
+#adminMenu h2 {
+    font-size: 1.5rem; /* Уменьшенный размер шрифта */
+    margin-bottom: 10px; /* Уменьшенный отступ */
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+#adminMenu input {
+    padding: 8px; /* Уменьшенный padding */
+    font-size: 1rem; /* Уменьшенный размер шрифта */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px; /* Уменьшенный радиус */
+    color: white;
+    margin-bottom: 8px; /* Уменьшенный отступ */
+    width: 90%; /* Уменьшенная ширина */
+}
+
+#adminMenu button {
+    margin: 4px; /* Уменьшенный отступ */
+    padding: 8px 16px; /* Уменьшенный padding */
+    border-radius: 8px; /* Уменьшенный радиус */
+    border: none;
+    background: linear-gradient(45deg, #00ffcc, #00ccaa);
+    color: black;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 1rem; /* Уменьшенный размер шрифта */
+}
+#adminMenu button:hover {
+    transform: scale(1.0);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
+}
+#adminMenu button:active {
+    transform: scale(0.90);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
+}
     </style>
 </head>
 <body>
@@ -278,9 +362,9 @@
     <!-- Меню выбора сложности -->
     <div id="difficultyMenu">
         <h2>Выберите сложность</h2>
-        <button id="easyBtn">Легко (30 уровней)</button>
-        <button id="mediumBtn">Трудно (60 уровней, x2 скорость)</button>
-        <button id="hardBtn">Хард (90 уровней, x3 скорость)</button>
+        <button id="easyBtn">Легко<br>(30 уровней)</button>
+<button id="mediumBtn">Трудно<br>(60 уровней, x2 скорость)</button>
+<button id="hardBtn">Хард<br>(90 уровней, x3 скорость)</button>
     </div>
 <div id="gameScreen" style="display: none;">
     <h1 id="levelText">Запомни и повтори последовательность</h1>
