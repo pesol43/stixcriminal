@@ -120,7 +120,7 @@
             100% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc; }
         }
 
-        #startBtn, #promoBtn, #levelSelectBtn, #closeAdminBtn, #addAttemptsBtn, #closePromoBtn, #submitPromoBtn, #playBtn {
+        #levelSelectBtn, #addAttemptsBtn, #closePromoBtn, #submitPromoBtn, #playBtn {
             margin: 10px;
             font-size: 20px;
             padding: 15px 30px;
@@ -132,11 +132,43 @@
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
-        #startBtn:active, #promoBtn:active, #levelSelectBtn:active, #closeAdminBtn:active, #addAttemptsBtn:active, #closePromoBtn:active, #playBtn:active {
+      #closeAdminBtn{
+            margin: 10px;
+            font-size: 20px;
+            padding: 30px 30px;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #00755e, #018268, #00755e);
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      #levelSelectBtn:active, #closeAdminBtn:active, #addAttemptsBtn:active, #closePromoBtn:active, #playBtn:active {
             transform: scale(0.95);
             box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
         }
+      #startBtn, #promoBtn {
+    margin: 10px;
+    font-size: 20px;
+    padding: 15px 30px;
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(45deg, #00755e, #018268, #00755e);
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#startBtn:hover, #promoBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+}
+
+#startBtn:active, #promoBtn:active {
+    transform: scale(0.95);
+}
 
         #adminMenu, #promoMenu, #difficultyMenu {
             display: none;
@@ -152,33 +184,70 @@
             text-align: center;
             color: white;
         }
-
+      #adminMenu{
+           display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9); /* Черный фон с прозрачностью */
+            padding: 10px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+            text-align: center;
+            color: white;
+        }
         #adminMenu h2, #promoMenu h2 {
             font-size: 2rem;
             margin-bottom: 15px;
             color: #00ffcc;
             text-shadow: 0 0 10px #00ffcc;
         }
-      #difficultyMenu h2 {
-    font-size: 2rem; /* Размер шрифта */
-    font-weight: bold; /* Жирный шрифт */
-    color: #00ffcc; /* Цвет текста */
-    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; /* Тень текста с эффектом свечения */
-    margin-bottom: 20px; /* Отступ снизу */
-    animation: glowText 5s infinite alternate; /* Анимация свечения текста */
-    text-align: center; /* Выравнивание текста по центру */
-    letter-spacing: 2px; /* Расстояние между буквами */
-    text-transform: uppercase; /* Преобразование текста в верхний регистр */
-    font-family: 'Orbitron', sans-serif; /* Шрифт */
-    padding:500xp;            
-    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
-    border-radius: 10px; /* Закругленные углы */
-    box-shadow: 0 0 15px rgba(0, 255, 204, 0.5); /* Тень с эффектом свечения */
-} 
+     #difficultyMenu h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    margin-bottom: 40px; /* Увеличил отступ снизу */
+    animation: glowText 5s infinite alternate;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.9);
+    margin-top: -30px; /* Поднял заголовок выше */
+}
+
+#difficultyMenu button {
+    margin: 10px;
+    padding: 10px 25px; /* Увеличил отступы для кнопок */
+    font-size: 1.2rem; /* Увеличил размер шрифта */
+    border-radius: 15px;
+    border: none;
+    background: linear-gradient(45deg, #32cfaf, #32cfaf);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 200px; /* Фиксированная ширина для кнопок */
+    text-align: center;
+}
+
+#difficultyMenu button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+}
+
+#difficultyMenu button:active {
+    transform: scale(0.95);
+}
 
         #adminMenu input, #promoMenu input {
-            padding: 10px;
-            font-size: 14px;
+            padding: 15px;
+            font-size: 20px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             color: white;
@@ -194,17 +263,7 @@
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-      #difficultyMenu button {
-        margin: 5px;
-            padding: 10px 10px;
-            border-radius: 10px;
-            border: none;
-            background: linear-gradient(45deg, #00ffcc, #00ccaa);
-            color: white;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        #adminMenu button:active, #promoMenu button:active, #difficultyMenu button:active {
+        #adminMenu button:active, #promoMenu button:active {
             transform: scale(0.95);
             box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
         }
@@ -223,34 +282,33 @@
         <button id="mediumBtn">Трудно (60 уровней, x2 скорость)</button>
         <button id="hardBtn">Хард (90 уровней, x3 скорость)</button>
     </div>
-
-    <!-- Основная игра -->
-    <div id="gameScreen" style="display: none;">
-        <h1 id="levelText">Запомни и повтори последовательность</h1>
-        <div>
-            <button id="startBtn">Начать</button>
-        </div>
-        <div class="buttons-container">
-            <button class="btn" data-color="red">1</button>
-            <button class="btn" data-color="blue">2</button>
-            <button class="btn" data-color="green">3</button>
-            <button class="btn" data-color="yellow">4</button>
-            <button class="btn" data-color="purple">5</button>
-            <button class="btn" data-color="orange">6</button>
-            <button class="btn" data-color="pink">7</button>
-            <button class="btn" data-color="cyan">8</button>
-            <button class="btn" data-color="gray">9</button>
-        </div>
-        <p id="message"></p>
-        <p id="attemptsText">Попыток осталось: 3</p>
+<div id="gameScreen" style="display: none;">
+    <h1 id="levelText">Запомни и повтори последовательность</h1>
+    <div>
+        <button id="startBtn">Начать</button>
+        <button id="promoBtn">Промокоды</button> <!-- Кнопка "Промокоды" справа от "Начать" -->
     </div>
+    <div class="buttons-container">
+        <button class="btn" data-color="red">1</button>
+        <button class="btn" data-color="blue">2</button>
+        <button class="btn" data-color="green">3</button>
+        <button class="btn" data-color="yellow">4</button>
+        <button class="btn" data-color="purple">5</button>
+        <button class="btn" data-color="orange">6</button>
+        <button class="btn" data-color="pink">7</button>
+        <button class="btn" data-color="cyan">8</button>
+        <button class="btn" data-color="gray">9</button>
+    </div>
+    <p id="message"></p>
+    <p id="attemptsText">Попыток осталось: 3</p>
+</div>
 
     <!-- Админ-меню -->
     <div id="adminMenu">
         <h2>Админ-меню</h2>
         <label for="levelSelect">Выберите уровень:</label>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <input type="number" id="levelSelect" min="1" max="60" value="1">
+            <input type="number" id="levelSelect" min="1" max="90" value="1">
             <button id="levelSelectBtn">Выбрать</button>
         </div>
         <label for="addAttemptsInput">Количество попыток:</label>
@@ -317,6 +375,9 @@
             "Popit5": 5,
             "pikmi": "admin" // Промокод для открытия админ-меню
         };
+      promoBtn.addEventListener('click', () => {
+        promoMenu.style.display = 'block'; // Открываем меню промокодов
+    });
 
         // Обновление текста попыток
         attemptsText.textContent = `Попыток осталось: ${attempts}`;
